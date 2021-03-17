@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ecoplastolModel.Store" Provider="Npgsql" ProviderManifestToken="12.3" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="wanna_lista_badan">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int4" Nullable="false" />
+          <Property Name="nazwa" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="data" Type="timestamp" Nullable="false" />
+        </EntityType>
+        <EntityType Name="wanna_probki_cisnienia">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int4" Nullable="false" />
+          <Property Name="id_badania" Type="int4" Nullable="false" />
+          <Property Name="data" Type="timestamp" Nullable="false" />
+          <Property Name="wartosc" Type="numeric" Precision="5" Scale="3" Nullable="false" />
+        </EntityType>
+        <EntityType Name="wanna_probki_temperatury">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int4" Nullable="false" />
+          <Property Name="id_badania" Type="int4" Nullable="false" />
+          <Property Name="data" Type="timestamp" Nullable="false" />
+          <Property Name="wartosc" Type="numeric" Precision="5" Scale="3" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="ecoplastolModelStoreContainer">
+          <EntitySet Name="wanna_lista_badan" EntityType="Self.wanna_lista_badan" Schema="public" store:Type="Tables" />
+          <EntitySet Name="wanna_probki_cisnienia" EntityType="Self.wanna_probki_cisnienia" Schema="public" store:Type="Tables" />
+          <EntitySet Name="wanna_probki_temperatury" EntityType="Self.wanna_probki_temperatury" Schema="public" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ecoplastolModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ecoplastolEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="wanna_lista_badan" EntityType="ecoplastolModel.wanna_lista_badan" />
+          <EntitySet Name="wanna_probki_cisnienia" EntityType="ecoplastolModel.wanna_probki_cisnienia" />
+          <EntitySet Name="wanna_probki_temperatury" EntityType="ecoplastolModel.wanna_probki_temperatury" />
+        </EntityContainer>
+        <EntityType Name="wanna_lista_badan">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nazwa" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="data" Type="DateTime" Nullable="false" Precision="6" />
+        </EntityType>
+        <EntityType Name="wanna_probki_cisnienia">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id_badania" Type="Int32" Nullable="false" />
+          <Property Name="data" Type="DateTime" Nullable="false" Precision="6" />
+          <Property Name="wartosc" Type="Decimal" Nullable="false" Precision="5" Scale="3" />
+        </EntityType>
+        <EntityType Name="wanna_probki_temperatury">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id_badania" Type="Int32" Nullable="false" />
+          <Property Name="data" Type="DateTime" Nullable="false" Precision="6" />
+          <Property Name="wartosc" Type="Decimal" Nullable="false" Precision="5" Scale="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ecoplastolModelStoreContainer" CdmEntityContainer="ecoplastolEntities" >
+          <EntitySetMapping Name="wanna_lista_badan">
+            <EntityTypeMapping TypeName="ecoplastolModel.wanna_lista_badan">
+              <MappingFragment StoreEntitySet="wanna_lista_badan">
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="wanna_probki_cisnienia">
+            <EntityTypeMapping TypeName="ecoplastolModel.wanna_probki_cisnienia">
+              <MappingFragment StoreEntitySet="wanna_probki_cisnienia">
+                <ScalarProperty Name="wartosc" ColumnName="wartosc" />
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="id_badania" ColumnName="id_badania" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="wanna_probki_temperatury">
+            <EntityTypeMapping TypeName="ecoplastolModel.wanna_probki_temperatury">
+              <MappingFragment StoreEntitySet="wanna_probki_temperatury">
+                <ScalarProperty Name="wartosc" ColumnName="wartosc" />
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="id_badania" ColumnName="id_badania" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

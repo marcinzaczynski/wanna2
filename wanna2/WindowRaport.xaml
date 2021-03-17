@@ -1,0 +1,41 @@
+﻿<Window x:Class="wanna2.WindowRaport"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:wanna2"
+        xmlns:helpers="clr-namespace:wanna2.Helpers"
+        xmlns:rdlcreport="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
+        mc:Ignorable="d"
+        Title="Podgląd raportu" Height="450" Width="800"
+        WindowState="Maximized">
+    <Window.CommandBindings>
+        <CommandBinding Command="helpers:CommandHandler.Zamknij" 
+                        Executed="CommandZamknij_Executed"/>
+
+    </Window.CommandBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+        <WindowsFormsHost Grid.Row="0" Margin="5">
+            <rdlcreport:ReportViewer x:Name="Raport"/>
+        </WindowsFormsHost>
+        <DockPanel Grid.Row="20">
+            <StackPanel Orientation="Vertical" Width="100" HorizontalAlignment="Left">
+                <Button Content="Drukuj" FontSize="14" Style="{StaticResource DolnyPrzycisk}" HorizontalAlignment="Center"/>
+                <Label HorizontalContentAlignment="Center" Margin="0,-5,0,0" >
+                    <TextBlock FontSize="10"><Bold>(Ctrl + P)</Bold></TextBlock>
+                </Label>
+            </StackPanel>
+            
+            <StackPanel Orientation="Vertical" Width="100" HorizontalAlignment="Right">
+                <Button FontSize="14" Name="btnZamknij" Style="{StaticResource DolnyPrzycisk}" HorizontalAlignment="Center" Command="helpers:CommandHandler.Zamknij" Content="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}"/>
+                <Label HorizontalContentAlignment="Center" Margin="0,-5,0,0" >
+                    <TextBlock FontSize="10"><Bold>(Alt + F4)</Bold></TextBlock>
+                </Label>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</Window>
