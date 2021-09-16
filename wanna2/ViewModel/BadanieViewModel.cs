@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using wanna2.Model;
 
 namespace wanna2.ViewModel
@@ -13,7 +14,7 @@ namespace wanna2.ViewModel
     public class BadanieViewModel : INotifyPropertyChanged
     {
         // ========================= PROPERTY CHANGE ===========================
-        #region region PROPERTY CHANGE
+        #region PROPERTY CHANGE
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string name)
@@ -23,7 +24,7 @@ namespace wanna2.ViewModel
         #endregion
 
         // ========================= PROPERTIES ================================
-        #region region PROPERTIES
+        #region FIELDS & PROPERTIES
         private int idBadania;
         public int IdBadania { get { return idBadania; } set { idBadania = value; OnPropertyChanged("IdBadania"); } }
 
@@ -75,11 +76,20 @@ namespace wanna2.ViewModel
         private bool czyWgranaTemperatura = false;
         public bool CzyWgranaTemperatura { get { return czyWgranaTemperatura; } set { czyWgranaTemperatura = value; OnPropertyChanged("CzyWgranaTemperatura"); } }
 
+        #region Logging
+
+        private string logBody = string.Empty;
+        public string LogBody { get { return logBody; } set { logBody = value; OnPropertyChanged("LogBody");  } }
+
+        #endregion
         #region Dane do raportu
+
         private string daneFirmy;
         public string DaneFirmy {  get { return daneFirmy; } set { daneFirmy = value; OnPropertyChanged("DaneFirmy"); } }
+
         #endregion
         #region Listy Ciśnienie
+
         private List<Cisnienie> listaCisnien;
         public List<Cisnienie> ListaCisnien { get { return listaCisnien; } set { listaCisnien = value; OnPropertyChanged("ListaCisnien"); } }
 
@@ -101,8 +111,10 @@ namespace wanna2.ViewModel
         /// Lista zawierająca próbki w postaci DataPoint(id kolejnej próbki, wartość) potrzebnej dla wykresu OxyPlot
         /// </summary>
         public IList<DataPoint> ListaCisnienInt { get { return listaCisnienInt; } set { listaCisnienInt = value; OnPropertyChanged("ListaCisnienInt"); } }
+
         #endregion
         #region Listy Temperatura
+
         private List<Temperatura> listaTemperatur;
         public List<Temperatura> ListaTemperatur { get { return listaTemperatur; } set { listaTemperatur = value; OnPropertyChanged("ListaTemperatur"); } }
 
@@ -114,9 +126,10 @@ namespace wanna2.ViewModel
 
         private IList<DataPoint> listaTemperaturInt;
         public IList<DataPoint> ListaTemperaturInt { get { return listaTemperaturInt; } set { listaTemperaturInt = value; OnPropertyChanged("ListaTemperaturInt"); } }
-        #endregion
 
         #endregion
+        #endregion
+
         public BadanieViewModel()
         {
             this.listaCisnien = new List<Cisnienie>();

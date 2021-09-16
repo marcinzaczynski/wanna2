@@ -42,7 +42,7 @@ namespace wanna2
 
             WannaCS = @"metadata=res://*/ModelEco.csdl|res://*/ModelEco.ssdl|res://*/ModelEco.msl;provider=Npgsql;provider connection string=""Host=192.168.20.206;Port=5432;Database=ecoplastol;Username=postgres""";
             //WannaCS = @"metadata=res://*/ModelEco.csdl|res://*/ModelEco.ssdl|res://*/ModelEco.msl;provider=Npgsql;provider connection string=""Host=193.32.180.162;Port=5555;Database=ecoplastol;Username=postgres;Password=postgres;Persist Security Info=True"""
-            globals.CzyJestPolaczenieZBazaDanych = CzyJestPolaczenieZBazaDanych();
+            //globals.CzyJestPolaczenieZBazaDanych = CzyJestPolaczenieZBazaDanych();
 
             WindowParametry.ZapiszEvent += new ZapiszParametryXMLDelegat(ZapiszParametryXML);
 

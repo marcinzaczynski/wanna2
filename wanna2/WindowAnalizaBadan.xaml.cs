@@ -1,4 +1,5 @@
-﻿using CsvHelper;
+﻿using wanna2.Helpers;
+using CsvHelper;
 using Microsoft.Win32;
 using OxyPlot;
 using OxyPlot.Wpf;
@@ -21,15 +22,30 @@ using wanna2.Model;
 
 namespace wanna2
 {
+
+    public delegate void AddLogDelegate(string logMessage);
     /// <summary>
     /// Interaction logic for WindowAnalizaBadan.xaml
     /// </summary>
+    
     public partial class WindowAnalizaBadan : Window
     {
+        private ConsoleLogger Logger;
         public WindowAnalizaBadan()
         {
             InitializeComponent();
+
+            ConsoleLogger.AddLogEvent += new AddLogDelegate(AddLog);
+
+            Logger = new ConsoleLogger();
+            Logger.LogMessage("SYSTEM", "", "Start", LogLevel.Verbose);
         }
+
+        private void AddLog(string logMessage)
+        {
+            BadanieVM.LogBody += logMessage + Environment.NewLine;
+        }
+
         private void btnNoweBadanie_Click(object sender, RoutedEventArgs e)
         {
             BadanieVM.NoweBadanie();
@@ -49,24 +65,45 @@ namespace wanna2
             {
                 try
                 {
+                    Logger.LogMessage("PLIK", "CIŚNIENIE", "Wczytany plik " + dlg.FileName, LogLevel.Debug);
                     using (var reader = new StreamReader(dlg.FileName))
                     using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
                         csv.Configuration.HasHeaderRecord = false;
                         csv.Configuration.Delimiter = "\t";
                         csv.Configuration.RegisterClassMap<CisnienieMap>();
+                        csv.Configuration.MissingFieldFound = null; // nie bierze pod uwagę wpisów nie pasujących do mapowania, np. niepełne wpisy bo brakło prądu
 
                         //var records = csv.GetRecords<Cisnienie>().ToList();
                         var CisnienieLista = new List<Cisnienie>();
-                        while (csv.Read())
+                        var j = 1;
+                        try
                         {
-                            var CTmp = new CisnienieTmp();
-                            CTmp = csv.GetRecord<CisnienieTmp>();
-                            // omijam rekordy z jakąkolwiek pustą wartością
-                            if ((String.IsNullOrEmpty(CTmp.Czas)) ||
-                                (String.IsNullOrEmpty(CTmp.Data)) ||
-                                (String.IsNullOrEmpty(CTmp.Wartosc))) { }
-                            else { CisnienieLista.Add(csv.GetRecord<Cisnienie>()); }
+                            while (csv.Read())
+                            {
+                                var CTmp = new CisnienieTmp();
+                                CTmp = csv.GetRecord<CisnienieTmp>();
+                                // omijam rekordy z jakąkolwiek pustą wartością
+                                if ((String.IsNullOrEmpty(CTmp.Czas)) ||
+                                    (String.IsNullOrEmpty(CTmp.Data)) ||
+                                    (String.IsNullOrEmpty(CTmp.Wartosc))) { }
+                                else 
+                                {
+                                    try
+                                    {
+                                        CisnienieLista.Add(csv.GetRecord<Cisnienie>());
+                                    }
+                                    catch 
+                                    {
+                                        Logger.LogMessage("PLIK", "CIŚNIENIE", "Niepoprawne wartości w linii " + j.ToString(), LogLevel.Error);
+                                    }
+                                }
+                                j++;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.LogMessage("PLIK", "CIŚNIENIE", "W linii " + j.ToString() + " - " + ex.Message, LogLevel.Error);
                         }
                         
                         if (CisnienieLista.Count() > 0)
@@ -99,9 +136,10 @@ namespace wanna2
                     }
                     BadanieVM.CzyWgraneCisnienie = true;
                 }
-                catch (Exception)
+                catch ( Exception ex)
                 {
-                    throw;
+                    Logger.LogMessage("PLIK", "CIŚNIENIE", ex.Message, LogLevel.Error);
+                    
                 }
             }
         }
@@ -120,26 +158,46 @@ namespace wanna2
             {
                 try
                 {
+                    Logger.LogMessage("PLIK", "TEMPERATURA", "Wczytany plik " + dlg.FileName, LogLevel.Debug);
                     using (var reader = new StreamReader(dlg.FileName))
                     using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
                         csv.Configuration.HasHeaderRecord = false;
                         csv.Configuration.Delimiter = "\t";
                         csv.Configuration.RegisterClassMap<TemperaturaMap>();
+                        csv.Configuration.MissingFieldFound = null; // nie bierze pod uwagę wpisów nie pasujących do mapowania, np. niepełne wpisy bo brakło prądu
 
                         //var records = csv.GetRecords<Cisnienie>().ToList();
                         var TemperaturaLista = new List<Temperatura>();
-                        while (csv.Read())
-                        {
-                            var CTmp = new TemperaturaTmp();
-                            CTmp = csv.GetRecord<TemperaturaTmp>();
-                            // omijam rekordy z jakąkolwiek pustą wartością
-                            if ((String.IsNullOrEmpty(CTmp.Czas)) ||
-                                (String.IsNullOrEmpty(CTmp.Data)) ||
-                                (String.IsNullOrEmpty(CTmp.Wartosc))) { }
-                            else { TemperaturaLista.Add(csv.GetRecord<Temperatura>()); }
+                        var j = 1;
+                        try
+                        { 
+                            while (csv.Read())
+                            {
+                                var CTmp = new TemperaturaTmp();
+                                CTmp = csv.GetRecord<TemperaturaTmp>();
+                                // omijam rekordy z jakąkolwiek pustą wartością
+                                if ((String.IsNullOrEmpty(CTmp.Czas)) ||
+                                    (String.IsNullOrEmpty(CTmp.Data)) ||
+                                    (String.IsNullOrEmpty(CTmp.Wartosc))) { }
+                                else 
+                                {
+                                    try
+                                    {
+                                        TemperaturaLista.Add(csv.GetRecord<Temperatura>());
+                                    }
+                                    catch
+                                    {
+                                        Logger.LogMessage("PLIK", "TEMPERATURA", "Niepoprawne wartości w linii " + j.ToString(), LogLevel.Error);
+                                    }
+                                    
+                                }
+                            }
                         }
-
+                        catch (Exception ex)
+                        {
+                            Logger.LogMessage("PLIK", "TEMPERATURA", "W linii " + j.ToString() + " - " + ex.Message, LogLevel.Error);
+                        }
                         if (TemperaturaLista.Count() > 0)
                         {
                             BadanieVM.ListaTemperatur = TemperaturaLista;
@@ -164,9 +222,9 @@ namespace wanna2
                     }
                     BadanieVM.CzyWgranaTemperatura = true;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw;
+                    Logger.LogMessage("PLIK", "TEMPERATURA", ex.Message, LogLevel.Error);
                 }
             }
         }

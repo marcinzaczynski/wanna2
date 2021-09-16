@@ -31,7 +31,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="300"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="70"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -138,6 +139,9 @@
             </oxy:Plot.Series>
             
         </oxy:Plot>
+        <ScrollViewer Grid.Row="2" Height="100" Visibility="Visible">
+            <TextBox Text="{Binding LogBody}" IsReadOnly="True" Background="LightGray"/>
+        </ScrollViewer>
         <DockPanel Grid.Row="20">
             <StackPanel Orientation="Vertical" Width="90" HorizontalAlignment="Right">
                 <Button  FontSize="14" Name="btnZamknij" Style="{StaticResource DolnyPrzycisk}" HorizontalAlignment="Right" Command="helpers:CommandHandler.Zamknij" Content="{Binding RelativeSource={RelativeSource Self}, Path=Command.Text}"/>

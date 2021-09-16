@@ -141,7 +141,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\CommandHandler.cs" />
+    <Compile Include="Helpers\ConsoleLogger.cs" />
     <Compile Include="Helpers\Converters.cs" />
+    <Compile Include="Helpers\Enums.cs" />
     <Compile Include="Helpers\globals.cs" />
     <Compile Include="Helpers\wanna_status.cs" />
     <Compile Include="ModelEco.Context.cs">
@@ -162,7 +164,6 @@
     <Compile Include="Model\Cisnienie.cs" />
     <Compile Include="Model\ParametryXml.cs" />
     <Compile Include="Model\Temperatura.cs" />
-    <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="ViewModel\BadanieViewModel.cs" />
     <Compile Include="ViewModel\ParametryViewModel.cs" />
     <Compile Include="WindowRaport.xaml.cs">
@@ -269,19 +270,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelEco.edmx</DependentUpon>
       <LastGenOutput>ModelEco.cs</LastGenOutput>
-    </Content>
-    <Content Include="SqlServerTypes\readme.htm" />
-    <Content Include="SqlServerTypes\x64\msvcr120.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlServerTypes\x86\msvcr120.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
